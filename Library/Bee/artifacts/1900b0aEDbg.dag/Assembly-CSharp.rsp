@@ -364,10 +364,12 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/Character.cs"
+"Assets/Scripts/DeleteMe.cs"
 "Assets/Scripts/Grid.cs"
 "Assets/Scripts/GridControl.cs"
 "Assets/Scripts/GridObject.cs"
 "Assets/Scripts/Node.cs"
+"Assets/Scripts/Pathfinding.cs"
 "Assets/TutorialInfo/Scripts/Readme.cs"
 -langversion:9.0
 
