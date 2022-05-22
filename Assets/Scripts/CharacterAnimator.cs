@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacterAnimator : MonoBehaviour
 {
     Animator animator;
+
     [SerializeField] bool move;
     [SerializeField] bool attack;
 

@@ -29,19 +29,18 @@ public class MoveCharacter : MonoBehaviour
 
                 path = pathfinding.FindPath(targetCharacter.positionOnGrid.x, targetCharacter.positionOnGrid.y, gridposition.x, gridposition.y);
 
+                if (path == null)
+                {
+                    return;
+                }
+                if (path.Count == 0)
+                {
+                    return;
+                }
+
+
                 targetCharacter.GetComponent<Movement>().Move(path);
 
-
-                /*
-                GridObject gridObject = targetGrid.GetPlacedObject(gridposition);
-                if(gridObject == null)
-                {
-                    Debug.Log("x=" + gridposition.x + "y=" + gridposition.y + "is empty");
-                }
-                else
-                {
-                    Debug.Log("x=" + gridposition.x + "y=" + gridposition.y + gridObject.GetComponent<Character>().Name);
-                }*/
             }
         }
     }

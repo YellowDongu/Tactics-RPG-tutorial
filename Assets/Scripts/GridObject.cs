@@ -8,12 +8,12 @@ public class GridObject : MonoBehaviour
     public Vector2Int positionOnGrid;
 
 
-    void Start()
+    private void Start()
     {
         Init();
     }
 
-    void Init()
+    private void Init()
     {
         positionOnGrid = targetGrid.GetGridPosition(transform.position);
         targetGrid.PlaceObject(positionOnGrid, this);

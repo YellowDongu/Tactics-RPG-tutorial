@@ -6,6 +6,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     GridObject gridObject;
+    CharacterAnimator characterAnimator;
 
     List<Vector3> pathWorldPositions;
 
@@ -14,17 +15,29 @@ public class Movement : MonoBehaviour
     private void Awake()
     {
         gridObject = GetComponent<GridObject>();
+        characterAnimator = GetComponentInChildren<CharacterAnimator>();
     }
 
     public void Move(List<PathNode> path)
     {
-        List<Vector3> pathWorldPositions =  gridObject.targetGrid.ConvertPathNodesToWorldPositions(path);
+        pathWorldPositions =  gridObject.targetGrid.ConvertPathNodesToWorldPositions(path);
 
         gridObject.positionOnGrid.x = path[path.Count - 1].pos_x;
         gridObject.positionOnGrid.y = path[path.Count - 1].pos_y;
+
+        RotateCharacter();
+
+        characterAnimator.StartMoving();
     }
 
-    void Update()
+    private void RotateCharacter()
+    {
+        Vector3 direction = (pathWorldPositions[0] - transform.position).normalized;
+        direction.y = 0;
+        transform.rotation = Quaternion.LookRotation(direction);
+    }
+
+    private void Update()
     {
         if(pathWorldPositions == null)
         {
@@ -34,11 +47,20 @@ public class Movement : MonoBehaviour
         {
             return;
         }
+
         transform.position = Vector3.MoveTowards(transform.position, pathWorldPositions[0], moveSpeed * Time.deltaTime);
 
         if(Vector3.Distance(transform.position, pathWorldPositions[0]) < 0.05f)
         {
             pathWorldPositions.RemoveAt(0);
+            if(pathWorldPositions.Count == 0)
+            {
+                characterAnimator.StopMoving();
+            }
+            else
+            {
+                RotateCharacter();
+            }
         }
     }
 }
