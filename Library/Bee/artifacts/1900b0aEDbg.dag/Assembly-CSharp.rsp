@@ -369,6 +369,7 @@
 "Assets/Scripts/DeleteMe.cs"
 "Assets/Scripts/Grid.cs"
 "Assets/Scripts/GridControl.cs"
+"Assets/Scripts/GridHighlight.cs"
 "Assets/Scripts/GridObject.cs"
 "Assets/Scripts/MoveCharacter.cs"
 "Assets/Scripts/Movement.cs"

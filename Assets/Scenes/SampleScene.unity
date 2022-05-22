@@ -1188,6 +1188,37 @@ Transform:
   m_Father: {fileID: 556248685}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1500375437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1500375438}
+  m_Layer: 0
+  m_Name: MovePointsContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1500375438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500375437}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1829344266}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1621303374
 GameObject:
   m_ObjectHideFlags: 0
@@ -1389,6 +1420,7 @@ GameObject:
   - component: {fileID: 1829344266}
   - component: {fileID: 1829344265}
   - component: {fileID: 1829344267}
+  - component: {fileID: 1829344268}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -1436,6 +1468,7 @@ Transform:
   - {fileID: 1043258527}
   - {fileID: 2143187959}
   - {fileID: 856437141}
+  - {fileID: 1500375438}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1451,6 +1484,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca8233c150455846830631046860f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1829344268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829344264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9323c3fe7a72584189a82e096b2699a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movePoint: {fileID: 6268908256513288035, guid: c6bf4a48085d5d545a4a93fbfedb7f17,
+    type: 3}
+  movePointsContainer: {fileID: 1500375437}
+  testTargetPosition:
+  - {x: 17, y: 14}
+  - {x: 17, y: 15}
+  - {x: 16, y: 14}
+  - {x: 18, y: 14}
+  - {x: 17, y: 13}
 --- !u!1 &1830505605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1617,7 +1671,7 @@ PrefabInstance:
     - target: {fileID: 3720716920847654054, guid: 9ad60f4913db5a048855f1ebdeca86bd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 33.18
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 3720716920847654054, guid: 9ad60f4913db5a048855f1ebdeca86bd,
         type: 3}
@@ -1627,7 +1681,7 @@ PrefabInstance:
     - target: {fileID: 3720716920847654054, guid: 9ad60f4913db5a048855f1ebdeca86bd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 28.96
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 3720716920847654054, guid: 9ad60f4913db5a048855f1ebdeca86bd,
         type: 3}
