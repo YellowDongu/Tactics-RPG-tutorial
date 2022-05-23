@@ -375,6 +375,7 @@
 "Assets/Scripts/Movement.cs"
 "Assets/Scripts/Node.cs"
 "Assets/Scripts/Pathfinding.cs"
+"Assets/Scripts/SelectableGridObject.cs"
 "Assets/TutorialInfo/Scripts/Readme.cs"
 -langversion:9.0
 
