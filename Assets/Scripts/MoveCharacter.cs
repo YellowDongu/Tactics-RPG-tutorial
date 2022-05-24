@@ -41,7 +41,6 @@ public class MoveCharacter : MonoBehaviour
                 //path = pathfinding.FindPath(targetCharacter.positionOnGrid.x, targetCharacter.positionOnGrid.y, gridposition.x, gridposition.y);
 
                 path = pathfinding.TraceBackPath(gridposition.x, gridposition.y);
-
                 path.Reverse();
 
                 if (path == null)
@@ -54,7 +53,6 @@ public class MoveCharacter : MonoBehaviour
                 }
 
                 targetCharacter.GetComponent<Movement>().Move(path);
-
             }
         }
     }

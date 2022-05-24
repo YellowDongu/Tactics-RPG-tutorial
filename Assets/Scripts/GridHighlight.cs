@@ -6,26 +6,25 @@ using UnityEngine;
 public class GridHighlight : MonoBehaviour
 {
     Grid grid;
-    [SerializeField] GameObject movePoint;
-    List<GameObject> movePointGOs;
-    [SerializeField] GameObject movePointsContainer;
+    [SerializeField] GameObject highlightPoint;
+    [SerializeField] GameObject Container;
 
+    List<GameObject> highlightPointsGOs;
 
-    [SerializeField] List<Vector2Int> testTargetPosition;
 
 
     void Awake()
     {
-        grid = GetComponent<Grid>();
-        movePointGOs = new List<GameObject>();
+        grid = GetComponentInParent<Grid>();
+        highlightPointsGOs = new List<GameObject>();
         //Highlight(testTargetPosition);
     }
 
-    private GameObject CreateMovePointHighlightObject()
+    private GameObject CreateHighlightObject()
     {
-        GameObject go = Instantiate(movePoint);
-        movePointGOs.Add(go);
-        go.transform.SetParent(movePointsContainer.transform);
+        GameObject go = Instantiate(highlightPoint);
+        highlightPointsGOs.Add(go);
+        go.transform.SetParent(Container.transform);
         return go;
     }
 
@@ -33,25 +32,25 @@ public class GridHighlight : MonoBehaviour
     {
         for (int i = 0; i < positions.Count; i++)
         {
-            Highlight(positions[i].x, positions[i].y, GetMovePointGO(i));
+            Highlight(positions[i].x, positions[i].y, GetHighlightPointGO(i));
         }
     }
     public void Highlight(List<PathNode> positions)
     {
         for (int i = 0; i < positions.Count; i++)
         {
-            Highlight(positions[i].pos_x, positions[i].pos_y, GetMovePointGO(i));
+            Highlight(positions[i].pos_x, positions[i].pos_y, GetHighlightPointGO(i));
         }
     }
 
-    private GameObject GetMovePointGO(int i)
+    private GameObject GetHighlightPointGO(int i)
     {
-        if(movePointGOs.Count < i)
+        if(highlightPointsGOs.Count < i)
         {
-            return movePointGOs[i];
+            return highlightPointsGOs[i];
         }
 
-        GameObject newHighlightObject = CreateMovePointHighlightObject();
+        GameObject newHighlightObject = CreateHighlightObject();
         return newHighlightObject;
     }
 

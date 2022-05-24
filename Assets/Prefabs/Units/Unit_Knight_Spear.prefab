@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4570599118432466976}
   - component: {fileID: 3204796613501672390}
   - component: {fileID: 1453939247087311498}
+  - component: {fileID: 6032765496780255975}
   - component: {fileID: 8635583916185057114}
   m_Layer: 0
   m_Name: Unit_Knight_Spear
@@ -49,6 +50,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Nameless
+  movementPoints: 50
+  hp: 100
+  damage: 20
+  attackRange: 1
 --- !u!114 &3204796613501672390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +81,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+--- !u!114 &6032765496780255975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4861548292595527691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e33552a6f22164a8a81779ae128432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8635583916185057114
 MonoBehaviour:
   m_ObjectHideFlags: 0
