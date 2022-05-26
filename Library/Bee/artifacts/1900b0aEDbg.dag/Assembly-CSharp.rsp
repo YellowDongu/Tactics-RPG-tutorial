@@ -368,6 +368,8 @@
 "Assets/Scripts/Character.cs"
 "Assets/Scripts/CharacterAnimator.cs"
 "Assets/Scripts/CharacterAttack.cs"
+"Assets/Scripts/CommandInput.cs"
+"Assets/Scripts/CommandManager.cs"
 "Assets/Scripts/DeleteMe.cs"
 "Assets/Scripts/Grid.cs"
 "Assets/Scripts/GridControl.cs"

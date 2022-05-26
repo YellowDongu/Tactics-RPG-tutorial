@@ -10,6 +10,18 @@ public class Movement : MonoBehaviour
 
     List<Vector3> pathWorldPositions;
 
+    public bool IS_MOVING
+    {
+        get
+        {
+            if(pathWorldPositions == null)
+            {
+                return false;
+            }
+            return pathWorldPositions.Count > 0;
+        }
+    }
+
     [SerializeField] float moveSpeed = 1f;
 
     private void Awake()
@@ -20,19 +32,29 @@ public class Movement : MonoBehaviour
 
     public void Move(List<PathNode> path)
     {
+        if (IS_MOVING)
+        {
+            SkipAnimation();
+        }
+
         pathWorldPositions =  gridObject.targetGrid.ConvertPathNodesToWorldPositions(path);
+
+        gridObject.targetGrid.RemoveObject(gridObject.positionOnGrid, gridObject);
 
         gridObject.positionOnGrid.x = path[path.Count - 1].pos_x;
         gridObject.positionOnGrid.y = path[path.Count - 1].pos_y;
 
-        RotateCharacter();
+        gridObject.targetGrid.PlaceObject(gridObject.positionOnGrid, gridObject);
+
+        RotateCharacter(transform.position, pathWorldPositions[0]);
 
         characterAnimator.StartMoving();
     }
 
-    private void RotateCharacter()
+
+    private void RotateCharacter(Vector3 originPosition, Vector3 destinationPosition)
     {
-        Vector3 direction = (pathWorldPositions[0] - transform.position).normalized;
+        Vector3 direction = (destinationPosition - originPosition).normalized;
         direction.y = 0;
         transform.rotation = Quaternion.LookRotation(direction);
     }
@@ -59,8 +81,22 @@ public class Movement : MonoBehaviour
             }
             else
             {
-                RotateCharacter();
+                RotateCharacter(transform.position, pathWorldPositions[0]);
             }
         }
+    }
+
+    public void SkipAnimation()
+    {
+        if(pathWorldPositions.Count < 2)
+        {
+            return;
+        }
+        transform.position = pathWorldPositions[pathWorldPositions.Count - 1];
+        Vector3 originPosition = pathWorldPositions[pathWorldPositions.Count - 2];
+        Vector3 destinationPosition = pathWorldPositions[pathWorldPositions.Count - 1];
+        RotateCharacter(originPosition, destinationPosition);
+        pathWorldPositions.Clear();
+        characterAnimator.StopMoving();
     }
 }

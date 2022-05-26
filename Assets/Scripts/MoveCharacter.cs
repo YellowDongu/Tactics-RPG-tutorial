@@ -6,54 +6,39 @@ using UnityEngine;
 public class MoveCharacter : MonoBehaviour
 {
     [SerializeField] Grid targetGrid;
-    [SerializeField] GridObject targetCharacter;
-    [SerializeField] LayerMask terrainLayerMask;
-
     [SerializeField] GridHighlight gridHighlight;
 
     Pathfinding pathfinding;
-    List<PathNode> path;
 
 
     private void Start()
     {
         pathfinding = targetGrid.GetComponent<Pathfinding>();
-        CheckWalkableTerrain();
     }
 
-    private void CheckWalkableTerrain()
+    public void CheckWalkableTerrain(Character targetCharacter)
     {
+        GridObject gridObject = targetCharacter.GetComponent<GridObject>();
         List<PathNode> walkableNodes = new List<PathNode>();
-        pathfinding.CalculateWalkableNodes(targetCharacter.positionOnGrid.x, targetCharacter.positionOnGrid.y, targetCharacter.GetComponent<Character>().movementPoints, ref walkableNodes);
+        pathfinding.Clear();
+        pathfinding.CalculateWalkableNodes(gridObject.positionOnGrid.x, gridObject.positionOnGrid.y, targetCharacter.movementPoints, ref walkableNodes);
+        gridHighlight.Hide();
         gridHighlight.Highlight(walkableNodes);
     }
 
-    private void Update()
+    public List<PathNode> GetPath(Vector2Int from)
     {
-        if (Input.GetMouseButtonDown(0))
+        List<PathNode> path = pathfinding.TraceBackPath(from.x, from.y);
+        path.Reverse();
+
+        if (path == null)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, float.MaxValue, terrainLayerMask))
-            {
-                Vector2Int gridposition = targetGrid.GetGridPosition(hit.point);
-
-                //path = pathfinding.FindPath(targetCharacter.positionOnGrid.x, targetCharacter.positionOnGrid.y, gridposition.x, gridposition.y);
-
-                path = pathfinding.TraceBackPath(gridposition.x, gridposition.y);
-                path.Reverse();
-
-                if (path == null)
-                {
-                    return;
-                }
-                if (path.Count == 0)
-                {
-                    return;
-                }
-
-                targetCharacter.GetComponent<Movement>().Move(path);
-            }
+            return null;
         }
+        if (path.Count == 0)
+        {
+            return null;
+        }
+        return path;
     }
 }

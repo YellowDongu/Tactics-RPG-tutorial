@@ -29,6 +29,22 @@ public class Grid : MonoBehaviour
         }
     }
 
+    internal void RemoveObject(Vector2Int positionOnGrid, GridObject gridObject)
+    {
+        if (CheckBoundry(positionOnGrid) == true)
+        {
+            if(grid[positionOnGrid.x, positionOnGrid.y].gridObject == gridObject)
+            {
+                return;
+            }
+            grid[positionOnGrid.x, positionOnGrid.y].gridObject = null;
+        }
+        else
+        {
+            Debug.Log("Object at outside the boundaries!");
+        }
+    }
+
     public List<Vector3> ConvertPathNodesToWorldPositions(List<PathNode> path)
     {
         List<Vector3> worldPositions = new List<Vector3>();

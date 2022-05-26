@@ -35,6 +35,15 @@ public class GridHighlight : MonoBehaviour
             Highlight(positions[i].x, positions[i].y, GetHighlightPointGO(i));
         }
     }
+
+    internal void Hide()
+    {
+        for (int i = 0; i < highlightPointsGOs.Count; i++)
+        {
+            highlightPointsGOs[i].SetActive(false);
+        }
+    }
+
     public void Highlight(List<PathNode> positions)
     {
         for (int i = 0; i < positions.Count; i++)
@@ -56,6 +65,7 @@ public class GridHighlight : MonoBehaviour
 
     public void Highlight(int posX, int posY, GameObject highlightObject)
     {
+        highlightObject.SetActive(true);    
         Vector3 position = grid.GetWorldPosition(posX, posY, true);
         position += Vector3.up * 0.2f;
         highlightObject.transform.position = position;
