@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class Command
     }
 
     public List<PathNode> path;
+    public GridObject target;
 }
 
 public class CommandManager : MonoBehaviour
@@ -46,15 +48,35 @@ public class CommandManager : MonoBehaviour
 
     public void ExecuteCommand()
     {
+        //MovementCommandExecute();
+        AttackCommandExecute();
+    }
+
+    private void AttackCommandExecute()
+    {
+        Character receiver = currentCommand.character;
+        receiver.GetComponent<Attack>().AttackPosition(currentCommand.target);
+        currentCommand = null;
+    }
+
+    private void MovementCommandExecute()
+    {
         Character receiver = currentCommand.character;
         receiver.GetComponent<Movement>().Move(currentCommand.path);
         currentCommand = null;
         commandInput.HighlightWalkableTerrain();
     }
+
     public void AddMoveCommand(Character character, Vector2Int selectedGrid, List<PathNode> path)
     {
         currentCommand = new Command(character, selectedGrid, CommandType.MoveTo);
         currentCommand.path = path;
+    }
+
+    internal void AddAttackCommand(Character attacker, Vector2Int selectGrid, GridObject target)
+    {
+        currentCommand = new Command(attacker, selectGrid, CommandType.Attack);
+        currentCommand.target = target;
     }
 
 
