@@ -9,6 +9,7 @@ public class CommandInput : MonoBehaviour
     MouseInput mouseInput;
     MoveCharacter moveCharacter;
     CharacterAttack characterAttack;
+    SelectCharacter selectCharacter;
 
     private void Awake()
     {
@@ -16,21 +17,46 @@ public class CommandInput : MonoBehaviour
         mouseInput = GetComponent<MouseInput>();
         moveCharacter = GetComponent<MoveCharacter>();
         characterAttack = GetComponent<CharacterAttack>();
+        selectCharacter = GetComponent<SelectCharacter>();
     }
 
-    [SerializeField] Character selectedCharacter;
     [SerializeField] CommandType currentCommand;
+    bool isInputCommand;
 
-    private void Start()
+    public void SetCommandType(CommandType commandType)
     {
-        //HighlightWalkableTerrain();
-        characterAttack.CalculateAttackArea(selectedCharacter.GetComponent<GridObject>().positionOnGrid, selectedCharacter.attackRange);
+        currentCommand = commandType;
+    }
+
+    public void InitCommand()
+    {
+        isInputCommand = true;
+        switch (currentCommand)
+        {
+            case CommandType.MoveTo:
+                HighlightWalkableTerrain();
+                break;
+            case CommandType.Attack:
+                characterAttack.CalculateAttackArea(selectCharacter.selected.GetComponent<GridObject>().positionOnGrid, selectCharacter.selected.attackRange);
+                break;
+        }
     }
 
     private void Update()
     {
-        //MoveCommandInput();
-        AttackCommandInput();
+        if(isInputCommand == false)
+        {
+            return;
+        }
+        switch (currentCommand)
+        {
+            case CommandType.MoveTo:
+                MoveCommandInput();
+                break;
+            case CommandType.Attack:
+                AttackCommandInput();
+                break;
+        }
     }
 
     private void AttackCommandInput()
@@ -44,7 +70,9 @@ public class CommandInput : MonoBehaviour
                 {
                     return;
                 }
-                commandManager.AddAttackCommand(selectedCharacter, mouseInput.positionOnGrid, gridObject);
+                commandManager.AddAttackCommand(selectCharacter.selected, mouseInput.positionOnGrid, gridObject);
+                selectCharacter.Deselect();
+                selectCharacter.enabled = true;
             }
         }
     }
@@ -62,17 +90,19 @@ public class CommandInput : MonoBehaviour
             {
                 return;
             }
-            commandManager.AddMoveCommand(selectedCharacter, mouseInput.positionOnGrid, path);
+            commandManager.AddMoveCommand(selectCharacter.selected, mouseInput.positionOnGrid, path);
+            selectCharacter.Deselect();
+            selectCharacter.enabled = true;
         }
 
         if (Input.GetMouseButtonDown(1))
         {
-            selectedCharacter.GetComponent<Movement>().SkipAnimation();
+            //selectCharacter.selected.GetComponent<Movement>().SkipAnimation();
         }
     }
 
     public void HighlightWalkableTerrain()
     {
-        moveCharacter.CheckWalkableTerrain(selectedCharacter);
+        moveCharacter.CheckWalkableTerrain(selectCharacter.selected);
     }
 }

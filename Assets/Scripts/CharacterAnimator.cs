@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterAnimator : MonoBehaviour
 {
+    //캐릭터 애니메이터 건들여주는 애 설명은 생략한다.
     Animator animator;
 
     [SerializeField] bool move;

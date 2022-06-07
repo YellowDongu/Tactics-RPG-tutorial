@@ -28,6 +28,13 @@ public class Command
 
 public class CommandManager : MonoBehaviour
 {
+    ClearUtility clearUtility;
+
+    private void Awake()
+    {
+        clearUtility = GetComponent<ClearUtility>();
+    }
+
     Command currentCommand;
 
     CommandInput commandInput;
@@ -48,8 +55,15 @@ public class CommandManager : MonoBehaviour
 
     public void ExecuteCommand()
     {
-        //MovementCommandExecute();
-        AttackCommandExecute();
+        switch (currentCommand.commandType)
+        {
+            case CommandType.MoveTo:
+                MovementCommandExecute();
+                break;
+            case CommandType.Attack:
+                AttackCommandExecute();
+                break;
+        }
     }
 
     private void AttackCommandExecute()
@@ -57,6 +71,7 @@ public class CommandManager : MonoBehaviour
         Character receiver = currentCommand.character;
         receiver.GetComponent<Attack>().AttackPosition(currentCommand.target);
         currentCommand = null;
+        clearUtility.ClearGridHighlightAttack();
     }
 
     private void MovementCommandExecute()
@@ -64,7 +79,8 @@ public class CommandManager : MonoBehaviour
         Character receiver = currentCommand.character;
         receiver.GetComponent<Movement>().Move(currentCommand.path);
         currentCommand = null;
-        commandInput.HighlightWalkableTerrain();
+        clearUtility.ClearPathfinding();
+        clearUtility.CleaGridHighlightMove();
     }
 
     public void AddMoveCommand(Character character, Vector2Int selectedGrid, List<PathNode> path)

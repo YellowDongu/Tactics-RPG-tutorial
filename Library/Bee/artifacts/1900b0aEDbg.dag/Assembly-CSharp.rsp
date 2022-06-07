@@ -368,8 +368,10 @@
 "Assets/Scripts/Character.cs"
 "Assets/Scripts/CharacterAnimator.cs"
 "Assets/Scripts/CharacterAttack.cs"
+"Assets/Scripts/ClearUtility.cs"
 "Assets/Scripts/CommandInput.cs"
 "Assets/Scripts/CommandManager.cs"
+"Assets/Scripts/CommandMenu.cs"
 "Assets/Scripts/DeleteMe.cs"
 "Assets/Scripts/Grid.cs"
 "Assets/Scripts/GridControl.cs"
@@ -382,6 +384,7 @@
 "Assets/Scripts/Node.cs"
 "Assets/Scripts/Pathfinding.cs"
 "Assets/Scripts/SelectableGridObject.cs"
+"Assets/Scripts/SelectCharacter.cs"
 "Assets/TutorialInfo/Scripts/Readme.cs"
 -langversion:9.0
 
