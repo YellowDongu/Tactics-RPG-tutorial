@@ -10,7 +10,7 @@ public class PathNode
 
     public float gValue; //시작점에서 해당 사각형까지의 거리
     public float hValue; //해당 사각형에서 도착지점까지의 거리
-    public PathNode parentNode;
+    public PathNode parentNode;//이 노드에 오기 전에 있었던 노드, 노드 안에 노드가 저장되고 그 노드 안에 노드가 저장되고...
 
     public float fValue //총합값 -- 걸은값 + 걸어가야하는 값
     {
@@ -35,7 +35,7 @@ public class PathNode
 public class Pathfinding : MonoBehaviour
 {
     //A* 알고리즘
-
+    //이 스크립트를 프로젝트 세팅에서 스크립트 엑시큐션 오더를 디폴트 위(시네머신유니버셜픽셀퍼펙트 위)로 올려야된다
     Grid gridMap;
     PathNode[,] pathNodes; //2차원 배열, 좌표임
 
@@ -49,6 +49,7 @@ public class Pathfinding : MonoBehaviour
         {
             for (int y = 0; y < gridMap.length; y++)
             {
+                //계산값 초기화
                 pathNodes[x, y].Clear();
             }
         }
@@ -73,27 +74,34 @@ public class Pathfinding : MonoBehaviour
 
     public void CalculateWalkableNodes(int startX, int startY, float range, ref List<PathNode> toHighlight)
     {
-        PathNode startNode = pathNodes[startX, startY];
+        //캐릭터가 움직일 수 있는 칸을 계산해서 하이라이트로 칠하고 추가로 리스트에도 올림
+        //이거 역시 A*알고리즘을 사용함
+        //내가 만들때는 하이라이트만 필요없으니 나중에 빼버리거나 상황이 변하면 이 문장을 수정하자
+        //이 메소드의 마지막 인수인 리스트는 계산된 노드들을 등록할 곳
+        PathNode startNode = pathNodes[startX, startY];//캐릭터 현재 지점
 
+        //A* 알고리즘 참고
         List<PathNode> openList = new List<PathNode>();
         List<PathNode> closedList = new List<PathNode>();
 
-        openList.Add(startNode);
-
+        openList.Add(startNode);//현재지점 저장
+        //리스트 항목이 있을때
         while (openList.Count > 0)
         {
+            //현재 노드를 꺼낸다. 그 노드는 출발지점이다. 현재 밟고 있음
             PathNode currentNode = openList[0];
-
+            //현재 노드를 폐기한다
             openList.Remove(currentNode);
             closedList.Add(currentNode);
 
-
+            //주변 노드 리스트 생성
             List<PathNode> neighbourNodes = new List<PathNode>();
+            //3X3 주변칸 수색
             for (int x = -1; x < 2; x++)
             {
                 for (int y = -1; y < 2; y++)
                 {
-                    if (x == 0 && y == 0)
+                    if (x == 0 && y == 0)//중앙칸 제거와 좌표가 맵 밖일때 건너뜀
                     {
                         continue;
                     }
@@ -101,33 +109,37 @@ public class Pathfinding : MonoBehaviour
                     {
                         continue;
                     }
-
+                    //심사 통과한 애들을 추가한다.
                     neighbourNodes.Add(pathNodes[currentNode.pos_x + x, currentNode.pos_y + y]);
                 }
-
+                //주변칸 계산
                 for (int i = 0; i < neighbourNodes.Count; i++)
                 {
+                    //이미 클로즈드리스트에 있음(이전에 간 곳)
                     if (closedList.Contains(neighbourNodes[i]))
                     {
                         continue;
                     }
+                    //갈 수 있는 곳인지 확인
                     if (gridMap.CheckWalkable(neighbourNodes[i].pos_x, neighbourNodes[i].pos_y) == false)
                     {
                         continue;
                     }
-
+                    //칸의 g값과 앞으로 갈 거리를 합침 = 시작부터 거기까지 도달하는데 드는 비용
                     float movementCost = currentNode.gValue + CalculateDistance(currentNode, neighbourNodes[i]);
 
-                    if(movementCost >range)
+                    //칸의 총 비용과 캐릭터 이동값 비교
+                    if (movementCost >range)
                     {
-                        continue;
+                        continue;//이동 범위 밖임 = 코스트 부족 => 못가 히히
                     }
-
+                    //등록된 애의 g값보다 낮을 경우 또는 or 갈 곳 리스트에 추가된 게 아니면
                     if (openList.Contains(neighbourNodes[i]) == false || movementCost < neighbourNodes[i].gValue)
                     {
+                        //등록해준다 -- 얘가 앞으로 갈 애
                         neighbourNodes[i].gValue = movementCost;
                         neighbourNodes[i].parentNode = currentNode;
-
+                        //오픈 리스트에도 등록 안되있으면 등록해준다.
                         if (openList.Contains(neighbourNodes[i]) == false)
                         {
                             openList.Add(neighbourNodes[i]);
@@ -136,9 +148,11 @@ public class Pathfinding : MonoBehaviour
                 }
             }
         }
-
+        //하이라이트 범위가 지정 안되있으면
         if(toHighlight != null)
         {
+            //클로즈드 리스트에 넣은 애들 = 갈 수 있는 애들이니깐 통째로 넣어준다.
+            //findpath에 이 구절과 인수 추가 하나면 외부 리스트에 계산결과를 넣을 수 있다!
             toHighlight.AddRange(closedList);
         }
     }
@@ -149,12 +163,14 @@ public class Pathfinding : MonoBehaviour
         PathNode startNode = pathNodes[startX, startY]; //시작지점 저장
         PathNode endNode = pathNodes[endX, endY]; //도착지점 저장
 
-        List<PathNode> openList = new List<PathNode>();//갈 지점 리스트
-        List<PathNode> closedList = new List<PathNode>();//갔던 지점 리스트
+        List<PathNode> openList = new List<PathNode>();//경로 분석을 위한 임시 저장소
+        List<PathNode> closedList = new List<PathNode>();//처리 완료된 모든 노드들을 위한 임시 저장소
 
         openList.Add(startNode);//시작지점 리스트에 저장
-
-        while(openList.Count > 0) //도착할때까지 혹은 다른 수단이 없을 때까지 반복수행
+        //도착할때까지 혹은 다른 수단이 없을 때까지 반복수행
+        //나온 마지막 탐색 경로를 크로즈드 리스트에 넣고 더이상 갈곳이 없을 때 루프 탈출
+        //탈출 조건 : 경로 없음 혹은 도착지점 도달
+        while (openList.Count > 0) 
         {
             PathNode currentNode = openList[0];//자신의 위치를 리스트 첫번째꺼에서 꺼내옴
             for (int i = 0; i < openList.Count; i++)
@@ -220,8 +236,7 @@ public class Pathfinding : MonoBehaviour
                         //지정해준다.
                         neighbourNodes[i].gValue = movementCost;
                         neighbourNodes[i].hValue = CalculateDistance(neighbourNodes[i], endNode);//h값도 계산해서 넣어주자
-                        //이 노드에 도달하는 경로 노드에 부모 노드를 저장 -- 뭔 말인지 확실하게 이해는 가지 않는다 번역기 복붙
-                        //아마 계산된 노드 중 경로가 될 노드가 저장되는 곳일듯 => 값이 젤 낮은 애
+                        //현재 노드를 다음 노드의 부모 노드로 저장시킴
                         neighbourNodes[i].parentNode = currentNode;
 
                         //갈 곳 리스트에 추가 안됐냐?
@@ -255,7 +270,9 @@ public class Pathfinding : MonoBehaviour
 
     private List<PathNode> RetracePath(PathNode startNode, PathNode endNode)
     {
-        //parentNode를 이용해 retrace 함
+        //parentNode를 직접 받아서 사용하는 애
+        //parentNode를 통해 저장된 경로들을 하나씩 꺼내서 리스트에 배치시키는 메소드
+        //이렇게 저장하면 도착지점에서 시작지점으로 가는 길이 되어버리니 리스트 Reverse는 필수
         List<PathNode> path = new List<PathNode>();
 
         PathNode currentNode = endNode; //거슬러 올라가는거니 끝지점을 시작지점 및 현재지점으로
@@ -272,17 +289,21 @@ public class Pathfinding : MonoBehaviour
 
     public List<PathNode> TraceBackPath(int x, int y)
     {
+        //x y 좌표를 받아 거기에 있는 노드의 parentNode를 받아 경로를 꺼내는 애
+        //맵 밖의 좌표는 스킵
         if (gridMap.CheckBoundry(x, y) == false)
         {
             return null;
         }
         List<PathNode> path = new List<PathNode>();
-
+        //받은 좌표의 노드 불러옴
         PathNode currentNode = pathNodes[x, y];
+        //경로 노드(경로로 지정된 노드)가 있으면 없을때까지 시행
         while(currentNode.parentNode != null)
         {
+            //현재 선택된 좌표를 리스트에 넣고
             path.Add(currentNode);
-            currentNode = currentNode.parentNode;
+            currentNode = currentNode.parentNode;//거슬러 올라간다
         }
         return path;
     }

@@ -22,6 +22,7 @@ public class MouseInput : MonoBehaviour
 
     private void Update()
     {
+        //항상 작동하되 지상이 아닌 물체에 마우스가 올라간 경우 작동 중지함
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, float.MaxValue, terrainLayerMask))
