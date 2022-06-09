@@ -37,8 +37,6 @@ public class MoveCharacter : MonoBehaviour
     {
         //정제가 완료된 리스트를 여기다가 저장한다.
         List<PathNode> path = pathfinding.TraceBackPath(from.x, from.y);
-        //메소드에서 리버스 안시켜줬으니 여기서 리버스
-        path.Reverse();
         //경로 없을 시 아무것도 안뱉음
         if (path == null)
         {
@@ -48,6 +46,9 @@ public class MoveCharacter : MonoBehaviour
         {
             return null;
         }
+        //메소드에서 리버스 안시켜줬으니 여기서 리버스
+        path.Reverse();
+
         return path;//경로 받아라
     }
 }

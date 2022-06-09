@@ -86,7 +86,7 @@ public class SelectCharacter : MonoBehaviour
         UpdatePanel();
     }
 
-    internal void Deselect()
+    public void Deselect()
     {
         selected = null;
     }

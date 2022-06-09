@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3377159956198894447}
   - component: {fileID: -1161439109162184466}
   - component: {fileID: 3855736636527177872}
+  - component: {fileID: 6031910896816698607}
   m_Layer: 0
   m_Name: Unit_Skeleton_Spear
   m_TagString: Untagged
@@ -103,6 +104,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 704c75a13893b234f916766cfb370d64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6031910896816698607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8269700578629587165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1e00a80e9ba4784fa42efda389b4dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5892334612054716931

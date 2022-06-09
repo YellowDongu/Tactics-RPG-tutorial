@@ -29,16 +29,23 @@ public class CommandMenu : MonoBehaviour
 
     public void MoveCommandSelected()
     {
-        commandInput.SetCommandType(CommandType.MoveTo);
-        commandInput.InitCommand();
-        ClosePanel();
+        //턴이 왔는지 확인
+        if (selectCharacter.selected.GetComponent<CharacterTurn>().canWalk)
+        {
+            commandInput.SetCommandType(CommandType.MoveTo);
+            commandInput.InitCommand();
+            ClosePanel();
+        }
     }
 
     public void AttackCommandSelected()
     {
-        commandInput.SetCommandType(CommandType.Attack);
-        commandInput.InitCommand();
-        ClosePanel();
-
+        //턴이 왔는지 확인
+        if (selectCharacter.selected.GetComponent<CharacterTurn>().canAct)
+        {
+            commandInput.SetCommandType(CommandType.Attack);
+            commandInput.InitCommand();
+            ClosePanel();
+        }
     }
 }

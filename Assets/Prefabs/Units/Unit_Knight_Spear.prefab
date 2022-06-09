@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1453939247087311498}
   - component: {fileID: 6032765496780255975}
   - component: {fileID: 8635583916185057114}
+  - component: {fileID: 6513170960378852893}
   m_Layer: 0
   m_Name: Unit_Knight_Spear
   m_TagString: Untagged
@@ -103,6 +104,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 704c75a13893b234f916766cfb370d64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6513170960378852893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4861548292595527691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1e00a80e9ba4784fa42efda389b4dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7692285336755554805

@@ -84,6 +84,8 @@ public class CommandInput : MonoBehaviour
                 selectCharacter.Deselect();
                 //선택이 가능하게 selectcharacter update메소드를 사용 가능하게 바꾼다.
                 selectCharacter.enabled = true;
+                //선택중엔 취소 전까진 다른 명령으로 바꾸지 못하게(오류나지 않도록) 막음
+                isInputCommand = false;
             }
         }
     }
@@ -109,6 +111,8 @@ public class CommandInput : MonoBehaviour
             selectCharacter.Deselect();
             //선택이 가능하게 selectcharacter update메소드를 사용 가능하게 바꾼다.
             selectCharacter.enabled = true;
+            //선택중엔 취소 전까진 다른 명령으로 바꾸지 못하게(오류나지 않도록) 막음
+            isInputCommand = false;
         }
 
         if (Input.GetMouseButtonDown(1))

@@ -75,6 +75,8 @@ public class CommandManager : MonoBehaviour
         Character receiver = currentCommand.character;
         //공격 명령을 내리고 캐릭터는 수행한다.
         receiver.GetComponent<Attack>().AttackPosition(currentCommand.target);
+        //공격 후 다른 행동 못하게 막음
+        receiver.GetComponent<CharacterTurn>().canAct = false;
         //명령 초기화
         currentCommand = null;
         //잔여물이 남지 않게 청소해준다.
@@ -87,6 +89,8 @@ public class CommandManager : MonoBehaviour
         Character receiver = currentCommand.character;
         //이동 명령을 내리고 캐릭터는 수행한다.
         receiver.GetComponent<Movement>().Move(currentCommand.path);
+        //공격 후 다시 움직이지 못하게 막음
+        receiver.GetComponent<CharacterTurn>().canWalk = false;
         //다음 명령을 내리기 위해 + 대기 상태로 만들기 위해 명령 초기화
         currentCommand = null;
         //잔여물이 남지 않게 청소해준다.
