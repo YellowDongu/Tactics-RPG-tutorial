@@ -11,6 +11,7 @@ public enum CommandType
 
 public class Command
 {
+    //필수항목
     public Character character;
     public Vector2Int selectedGrid;
     public CommandType commandType;
@@ -22,7 +23,7 @@ public class Command
         this.selectedGrid = selectedGrid;
         this.commandType = commandType;
     }
-
+    //선택항목
     public List<PathNode> path;
     public GridObject target;
 }

@@ -44,12 +44,12 @@ public class Movement : MonoBehaviour
         //움직일 애를 기존 좌표 노드에서 등록 해제
         gridObject.targetGrid.RemoveObject(gridObject.positionOnGrid, gridObject);
 
-        //노드에 도달할때마다 노드의 좌표를 불러와 캐릭터의 좌표를 노드 좌표로 업데이트
+        //마지막 노드의 좌표를 불러와 캐릭터의 노드 좌표를 이 좌표로 업데이트
         gridObject.positionOnGrid.x = path[path.Count - 1].pos_x;
         gridObject.positionOnGrid.y = path[path.Count - 1].pos_y;
         //등록도 함
         gridObject.targetGrid.PlaceObject(gridObject.positionOnGrid, gridObject);
-        //다음 좌표로 몸 틀기
+        //다음 좌표로 몸 틀기(처음 발 떼기전에 목적지 보게 하)
         RotateCharacter(transform.position, pathWorldPositions[0]);
         //애니메이션도 재생
         characterAnimator.StartMoving();

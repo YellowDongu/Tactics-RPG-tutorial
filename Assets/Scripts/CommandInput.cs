@@ -10,6 +10,7 @@ public class CommandInput : MonoBehaviour
     MoveCharacter moveCharacter;
     CharacterAttack characterAttack;
     SelectCharacter selectCharacter;
+    ClearUtility clearUtility;
 
     private void Awake()
     {
@@ -18,6 +19,8 @@ public class CommandInput : MonoBehaviour
         moveCharacter = GetComponent<MoveCharacter>();
         characterAttack = GetComponent<CharacterAttack>();
         selectCharacter = GetComponent<SelectCharacter>();
+        clearUtility = GetComponent<ClearUtility>();
+
     }
 
     [SerializeField] CommandType currentCommand;
@@ -80,13 +83,15 @@ public class CommandInput : MonoBehaviour
                 }
                 //있으면 명령을 수행한다. 필요한 자료도 가져간다.
                 commandManager.AddAttackCommand(selectCharacter.selected, mouseInput.positionOnGrid, gridObject);
-                //선택된 애를 선택 해제한다.
-                selectCharacter.Deselect();
-                //선택이 가능하게 selectcharacter update메소드를 사용 가능하게 바꾼다.
-                selectCharacter.enabled = true;
-                //선택중엔 취소 전까진 다른 명령으로 바꾸지 못하게(오류나지 않도록) 막음
-                isInputCommand = false;
+                stopCommandInput();
             }
+        }
+        //취소
+        if (Input.GetMouseButtonDown(1))
+        {
+            stopCommandInput();
+            //하이라이트 제거
+            clearUtility.ClearGridHighlightAttack();
         }
     }
 
@@ -107,18 +112,27 @@ public class CommandInput : MonoBehaviour
             }
             //커맨드 매니저에 이동명령을 내리고 필요한 자료도 같이 준다.
             commandManager.AddMoveCommand(selectCharacter.selected, mouseInput.positionOnGrid, path);
-            //선택했던 애를 선택 취소한다.
-            selectCharacter.Deselect();
-            //선택이 가능하게 selectcharacter update메소드를 사용 가능하게 바꾼다.
-            selectCharacter.enabled = true;
-            //선택중엔 취소 전까진 다른 명령으로 바꾸지 못하게(오류나지 않도록) 막음
-            isInputCommand = false;
+            stopCommandInput();
         }
-
+        //취소
         if (Input.GetMouseButtonDown(1))
         {
-            //selectCharacter.selected.GetComponent<Movement>().SkipAnimation();
+            stopCommandInput();
+            //하이라이트 제거
+            clearUtility.CleaGridHighlightMove();
+            //경로 계산값 제거
+            clearUtility.ClearPathfinding();
         }
+    }
+
+    private void stopCommandInput()
+    {
+        //선택했던 애를 선택 취소한다.
+        selectCharacter.Deselect();
+        //선택이 가능하게 selectcharacter update메소드를 사용 가능하게 바꾼다.
+        selectCharacter.enabled = true;
+        //선택중엔 취소 전까진 다른 명령으로 바꾸지 못하게(오류나지 않도록) 막음
+        isInputCommand = false;
     }
 
     public void HighlightWalkableTerrain()
