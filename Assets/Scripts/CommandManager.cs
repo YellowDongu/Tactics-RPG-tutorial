@@ -75,7 +75,7 @@ public class CommandManager : MonoBehaviour
         //명령 내릴 캐릭터 정보를 받는다
         Character receiver = currentCommand.character;
         //공격 명령을 내리고 캐릭터는 수행한다.
-        receiver.GetComponent<Attack>().AttackPosition(currentCommand.target);
+        receiver.GetComponent<Attack>().AttackGridObject(currentCommand.target);
         //공격 후 다른 행동 못하게 막음
         receiver.GetComponent<CharacterTurn>().canAct = false;
         //명령 초기화

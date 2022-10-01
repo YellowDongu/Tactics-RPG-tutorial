@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class CharacterAnimator : MonoBehaviour
 
     [SerializeField] bool move;
     [SerializeField] bool attack;
-
+    [SerializeField] bool defeated;
 
     private void Awake()
     {
@@ -25,6 +26,12 @@ public class CharacterAnimator : MonoBehaviour
     {
         move = false;
     }
+
+    public void Defeated()
+    {
+        defeated = true;
+    }
+
     public void Attack()
     {
         attack = true;
@@ -34,9 +41,15 @@ public class CharacterAnimator : MonoBehaviour
     {
         animator.SetBool("Move", move);
         animator.SetBool("Attack", attack);
+        animator.SetBool("Defeated", defeated);
         if (attack == true)
         {
             attack = false;
         }
+    }
+
+    internal void Flinch()
+    {
+        animator.SetTrigger("Pain");
     }
 }

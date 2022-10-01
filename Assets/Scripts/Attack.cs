@@ -7,21 +7,23 @@ public class Attack : MonoBehaviour
 {
     GridObject gridObject;
     CharacterAnimator characterAnimator;
-
+    Character character;
 
     private void Awake()
     {
+        character = GetComponent<Character>();
         gridObject = GetComponent<GridObject>();
         characterAnimator = GetComponentInChildren<CharacterAnimator>();
 
     }
 
 
-    public void AttackPosition(GridObject targetGridObjsect)
+    public void AttackGridObject(GridObject targetGridObjsect)
     {
         //공격할때 몸을 틀어주는 역할 + 애니메이션 재생을 하는 아이
         RotateCharacter(targetGridObjsect.transform.position);
         characterAnimator.Attack();
+        targetGridObjsect.GetComponent<Character>().TakeDamage(character.damage);
     }
 
     private void RotateCharacter(Vector3 towards)
