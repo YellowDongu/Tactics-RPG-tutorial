@@ -3,8 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Allegiance
+{
+    Player,
+    Opponent
+}
+
 public class CharacterTurn : MonoBehaviour
 {
+    public Allegiance allegiance;
     public bool canWalk;
     public bool canAct;
 

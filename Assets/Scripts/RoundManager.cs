@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,11 +17,14 @@ public class RoundManager : MonoBehaviour
 
     //싱글턴 패턴 끝
 
-    List<CharacterTurn> characters;
+
+    [SerializeField] ForceContainer playerForceContainer;
+    [SerializeField] ForceContainer opponentForceContainer;
     //시작시 1번째 턴
     int round = 1;
     //턴을 표시할 텍스트(TMP) 지정
     [SerializeField] TMPro.TextMeshProUGUI turnCountText;
+    [SerializeField] TMPro.TextMeshProUGUI forceRoundText;
 
     private void Start()
     {
@@ -30,12 +34,47 @@ public class RoundManager : MonoBehaviour
 
     public void AddMe(CharacterTurn character)
     {
-        //턴 넘길 시 리스트에 있는 캐릭터들의 행동력을 반환하기 위해 케릭터들 리스트에 추가하고 사용
-        if (characters == null)
+        if(character.allegiance == Allegiance.Player)
         {
-            characters = new List<CharacterTurn>();
+            playerForceContainer.AddMe(character);
         }
-        characters.Add(character);
+        if(character.allegiance == Allegiance.Opponent)
+        {
+            opponentForceContainer.AddMe(character);
+        }
+    }
+
+    Allegiance currentTurn;
+
+    public void NextTurn()
+    {
+        switch (currentTurn)
+        {
+            case Allegiance.Player:
+                currentTurn = Allegiance.Opponent;
+                break;
+            case Allegiance.Opponent:
+                NextRound();
+                currentTurn = Allegiance.Player;
+                break;
+        }
+
+        GrantTurnToForce();
+        //텍스트 수정(TMP TEXT도 포함)
+        UpdateTextOnScreen();
+    }
+
+    private void GrantTurnToForce()
+    {
+        switch (currentTurn)
+        {
+            case Allegiance.Player:
+                playerForceContainer.GrantTurn();
+                break;
+            case Allegiance.Opponent:
+                opponentForceContainer.GrantTurn();
+                break;
+        }
     }
 
     public void NextRound()
@@ -43,18 +82,12 @@ public class RoundManager : MonoBehaviour
         //턴 넘기기
         //이 변수로 몇번째 턴인지 저장
         round += 1;
-        //텍스트 수정(TMP TEXT도 포함)
-        UpdateTextOnScreen();
-        //한명씩 행동력 반환 -- 위에서 추가했던 리스트 사용
-        for (int i = 0; i < characters.Count; i++)
-        {
-            characters[i].GrantTurn();
-        }
     }
 
     void UpdateTextOnScreen()
     {
         //텍스트 표시 -- 턴 표시
         turnCountText.text = "Turn : " + round.ToString();
+        forceRoundText.text = currentTurn.ToString();
     }
 }

@@ -65,7 +65,7 @@ public class SelectCharacter : MonoBehaviour
         //선택된 애가 있으면 명령패널 열어준다
         if(selected != null)
         {
-            commandMenu.OpenPanel();
+            commandMenu.OpenPanel(selected.GetComponent<CharacterTurn>());
         }
         else
         {

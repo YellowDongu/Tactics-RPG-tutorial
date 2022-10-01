@@ -374,6 +374,7 @@
 "Assets/Scripts/CommandManager.cs"
 "Assets/Scripts/CommandMenu.cs"
 "Assets/Scripts/DeleteMe.cs"
+"Assets/Scripts/ForceContainer.cs"
 "Assets/Scripts/GameMenu.cs"
 "Assets/Scripts/Grid.cs"
 "Assets/Scripts/GridControl.cs"
