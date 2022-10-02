@@ -100,6 +100,10 @@ public class CommandInput : MonoBehaviour
         //이동 명령을 받아 추가 입력 받도록 대기한다.
         if (Input.GetMouseButtonDown(0))
         {
+            if(moveCharacter.CheckOccupied(mouseInput.positionOnGrid) == true)
+            {
+                return;
+            }
             //마우스 좌표를 주고 경로를 받는다
             List<PathNode> path = moveCharacter.GetPath(mouseInput.positionOnGrid);
             if (path == null)//경로가 없다 스킵

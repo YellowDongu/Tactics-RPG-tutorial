@@ -59,6 +59,11 @@ public class Grid : MonoBehaviour
         return worldPositions;
     }
 
+    internal bool CheckOccupied(Vector2Int positionOnGrid)
+    {
+        return GetPlacedObject(positionOnGrid) != null;
+    }
+
     public bool CheckBoundry(Vector2Int positionOnGrid)
     {
         //경계 체크(벡터2용)

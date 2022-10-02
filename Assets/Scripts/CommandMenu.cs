@@ -19,7 +19,7 @@ public class CommandMenu : MonoBehaviour
 
     public void OpenPanel(CharacterTurn characterTurn)
     {
-        selectCharacter.enabled = false;
+        //selectCharacter.enabled = false;
         panel.SetActive(true);
 
         if (characterTurn.allegiance != Allegiance.Player)

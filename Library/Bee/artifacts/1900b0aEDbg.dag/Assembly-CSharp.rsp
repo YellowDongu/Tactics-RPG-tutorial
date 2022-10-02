@@ -381,6 +381,7 @@
 "Assets/Scripts/GridHighlight.cs"
 "Assets/Scripts/GridObject.cs"
 "Assets/Scripts/Marker.cs"
+"Assets/Scripts/ModelRandomization.cs"
 "Assets/Scripts/MouseInput.cs"
 "Assets/Scripts/MoveCharacter.cs"
 "Assets/Scripts/Movement.cs"

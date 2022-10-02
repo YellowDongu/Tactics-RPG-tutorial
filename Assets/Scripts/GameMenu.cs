@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameMenu : MonoBehaviour
 {
-    [SerializeField] GameObject panel;
+    public GameObject panel;
     SelectCharacter selectCharacter;
 
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class GameMenu : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1))
         {
-            panel.SetActive(true);
+            panel.SetActive(!panel.activeInHierarchy);
         }
     }
 }

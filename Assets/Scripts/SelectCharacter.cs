@@ -7,11 +7,13 @@ public class SelectCharacter : MonoBehaviour
 {
     MouseInput mouseInput;
     CommandMenu commandMenu;
+    GameMenu gameMenu;
 
     private void Awake()
     {
         mouseInput = GetComponent<MouseInput>();
         commandMenu = GetComponent<CommandMenu>();
+        gameMenu = GetComponent<GameMenu>();
     }
 
     public Character selected;
@@ -75,6 +77,15 @@ public class SelectCharacter : MonoBehaviour
 
     private void selectInput()
     {
+        if(selected != null)
+        {
+            return;
+        }
+        if(gameMenu.panel.activeInHierarchy == true)
+        {
+            return;
+        }
+
         //인풋 넣어주는 애
         if (Input.GetMouseButtonDown(0))
         {
